@@ -13,8 +13,6 @@ public class Game {
 	public char[][] board = new char[3][3];
 	Scanner scan = new Scanner(System.in);
 	public char turn = 'X';
-	public int movecounter = 1;
-	public int draw = 0;
 
 
 
@@ -85,10 +83,7 @@ public class Game {
 		 else if (board[2][0] == board[1][1] && board[2][0] == board[0][2] && board[2][0] != '_' )
 			return true;
 
-		if(movecounter == 9){
-			draw = 1;
-			return true;
-		}
+
 
 		 return false;
 	}
@@ -99,7 +94,6 @@ public class Game {
 		else
 			turn = 'O';
 
-		movecounter++;
 	}
 
 	public char setBoard(int row, int col){
