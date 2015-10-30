@@ -13,6 +13,10 @@ public class Game {
 	public char[][] board = new char[3][3];
 	Scanner scan = new Scanner(System.in);
 	public char turn = 'X';
+	public char[] empty = new char[9];
+	public char[] pos = new char[9];
+  AI ai;
+
 
 
 
@@ -36,10 +40,25 @@ public class Game {
 
 	}
 
-	public void play(player){
-		this.AI = player;
+	public char[] makeList(){ // converts all coordinates to a list
+  int count = 0;
+ 	 for(int i = 0; i<3; i++){
+ 		 for(int j = 0; j<3; j++){
+ 			 pos[count] = board[i][j];
+ 			 count++;
+ 	   }
+	 }
+	 return pos;
+  }
+
+
+	public void play(){
+		System.out.println("Please choose a level");
+		ai = new AI(scan.nextInt(), this);
+
 		playing = true;
 		while (playing){
+
 			System.out.println("Please enter row and column:");
 			row = scan.nextInt() - 1;
 			col = scan.nextInt() - 1;

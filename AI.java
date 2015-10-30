@@ -1,31 +1,38 @@
 public class AI{
-  public void AI(level){
-    private int gamelevel = level;
-    Game ttt;
-    Frame ui;
+  private int gamelevel;
+  public char[][] available;
+  public char[][] randCell;
+  public int move;
+  public int next;
+  public Game ttt;
 
-    public AIgalaw(position){
-      // AI action
+  public AI(int level, Game ttt){
+    gamelevel = level;
+    this.ttt = ttt;
 
-      }
+
+
     }
 
-    private void RandomLevel(turn){
-      public char[][] available = ttt.emptyCells(); //add this function to Game.java
-      public char[][] randCell = available[Math.floor(Math.random() * available.length)][Math.floor(Math.random() * available.length)];
-      public int move = new AIgalaw(randCell);
-      public int next = move.apply(ttt.play);
-      ui.actionPerformed(randCell, turn);
+  public void AIgalaw(char[][] position){
+    // AI action
+
     }
 
+  public void RandomLevel(char turn){
+    
 
-    this.notify = public void menu(turn){
-      switch(level){
-      //choose a level
-      case 0: RandomLevel(turn); break;
-      /*case 1: level_2(turn); break;
-      case 2: level_3(turn); break;*/
-      }
-    }
   }
-}
+
+
+    //
+    //  public void menu(char turn){
+    //   switch(level){
+    //   //choose a level
+    //   case 0: RandomLevel(turn); break;
+    //   /*case 1: level_2(turn); break;
+    //   case 2: level_3(turn); break;*/
+    //   }
+    // }
+
+  }
