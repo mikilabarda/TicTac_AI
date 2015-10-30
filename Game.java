@@ -36,7 +36,8 @@ public class Game {
 
 	}
 
-	public void play(){
+	public void play(player){
+		this.AI = player;
 		playing = true;
 		while (playing){
 			System.out.println("Please enter row and column:");
@@ -46,14 +47,14 @@ public class Game {
 			board[row][col] = turn;
 
 			if(GameOver()){
-				if(draw == 0){
+				//if(draw == 0){
 				playing = false;
 				System.out.println("player " + turn + " wins");
-			}
-			else{
-				playing = false;
-				System.out.println("It's a draw!");
-			}
+		//	}
+		//	else{
+				//playing = false;
+				//System.out.println("It's a draw!");
+		//	}
 			}
 			printBoard();
 
