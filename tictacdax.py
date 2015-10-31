@@ -12,15 +12,35 @@ class Player(object):
         self.empty_cells = empty_cells
         self.ui = ui
         self.win_cells = [['00', '01', '02'], ['10', '11', '12'], ['20', '21', '22'], ['00', '10', '20'],
-                             ['10','11','21'] ['02', '12','22'], ['00', '11', '22'], ['02', '12', '22']]
-        self.count = 0
+                             ['10','11','21'], ['02', '12','22'], ['00', '11', '22'], ['02', '11', '20']]
         self.maxval = 0;
 
 
 
     def ai_pick(self):
-        if self.level=='random':
-            cell = self.pick_random()
+        if self.level == 'level1':
+            tracker = {}
+            for emptycell in self.empty_cells:
+                tracker[emptycell] = 0
+                if self.doIwin(emptycell):
+                    tracker[emptycell] = 100
+                elif self.enemywins(emptycell):
+                    tracker[emptycell] = 50
+                else:
+                    tracker[emptycell] = self.numwins(emptycell)
+
+            count = tracker[self.empty_cells[0]]
+            cell = self.empty_cells[0]
+            for emptycell in self.empty_cells:
+                if count < tracker[emptycell]:
+                    cell = emptycell
+                    count = tracker[emptycell]
+            print 'pick', cell, count, tracker
+
+
+
+            return cell
+
 
     def turn(self,button=None):
 
@@ -37,9 +57,17 @@ class Player(object):
             for b in self.ui.buttons:
                 if b.row == row and b.col == col:
                     b.text = self.xo
+        elif self.level == 'level1':
+            cell = self.ai_pick()
+            row = int(cell[0])
+            col = int(cell[1])
+            for b in self.ui.buttons:
+                if b.row == row and b.col == col:
+                    b.text = self.xo
 
         self.empty_cells.remove(cell)
         self.board[row][col] = self.xo
+
 
 
     def pick_random(self):
@@ -50,24 +78,58 @@ class Player(object):
     def __repr__(self):
         return '<Player: name:' + self.name +  ' level: ' + self.level +'>'
 
-    def numwins(self.cell):
-        empty = self.empty_cells
-        count = self.count
-        maxval = self.maxval
+    def getenemymarker(self):
+        if(self.xo == 'x'):
+            return 'o'
+        else: return 'x'
 
-        for i in range(8):
-            for j in range(3):
-                if self.cell == win[i][j]:
-                    for a in self.empty_cells
-                        if win[i][j] == a:
-                            count++
+    def numwins(self, cell):
+        count = 0
+        for win_cell in self.win_cells:
+            has_enemy = False
+            for win in win_cell:
+                row = int(win[0])
+                col = int(win[1])
+                if(self.getenemymarker() == self.board[row][col]):
+                    has_enemy = True
+                    break
+
+            if cell in win_cell and has_enemy==False:
+                count += 1
+
         return count
-    def enemywins(self.cell):
-        pass
 
-    def doIwin(self.cell):
-        if numwins(self.cell)
+    def enemywins(self, cell):
+        for win_cell in self.win_cells:
+            count = 0
+            hasblank = False
+            if cell in win_cell:
+                for i in win_cell:
+                    row = int(i[0])
+                    col = int(i[1])
+                    if(self.board[row][col] == self.getenemymarker()):
+                        count += 1
+                    elif(self.board[row][col] == '_'):
+                        hasblank = True
+                    if(count == 2 and hasblank == True):
+                        return True
+        return False
 
+    def doIwin(self, cell):
+        for win_cell in self.win_cells:
+            count = 0
+            hasblank = False
+            if cell in win_cell:
+                for i in win_cell:
+                    row = int(i[0])
+                    col = int(i[1])
+                    if(self.board[row][col] == self.xo):
+                        count += 1
+                    elif(self.board[row][col] == '_'):
+                        hasblank = True
+                    if(count == 2 and hasblank == True):
+                        return True
+        return False
 
 
 class Game(object):
@@ -205,7 +267,7 @@ class UI(object):
             pass
 
 if __name__ == '__main__':
-    g = Game(p2_level='random')
+    g = Game(p2_level='level1')
 
     #g = Game(p1_level='random', p2_level='random')
     g.auto()
