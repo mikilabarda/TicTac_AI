@@ -11,6 +11,11 @@ class Player(object):
         self.board = board
         self.empty_cells = empty_cells
         self.ui = ui
+        self.win_cells = [['00', '01', '02'], ['10', '11', '12'], ['20', '21', '22'], ['00', '10', '20'],
+                             ['10','11','21'] ['02', '12','22'], ['00', '11', '22'], ['02', '12', '22']]
+        self.count = 0
+        self.maxval = 0;
+
 
 
     def ai_pick(self):
@@ -44,6 +49,26 @@ class Player(object):
 
     def __repr__(self):
         return '<Player: name:' + self.name +  ' level: ' + self.level +'>'
+
+    def numwins(self.cell):
+        empty = self.empty_cells
+        count = self.count
+        maxval = self.maxval
+
+        for i in range(8):
+            for j in range(3):
+                if self.cell == win[i][j]:
+                    for a in self.empty_cells
+                        if win[i][j] == a:
+                            count++
+        return count
+    def enemywins(self.cell):
+        pass
+
+    def doIwin(self.cell):
+        if numwins(self.cell)
+
+
 
 class Game(object):
     def __init__(self,p1_level='human', p2_level='human'):
